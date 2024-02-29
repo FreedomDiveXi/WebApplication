@@ -1,0 +1,23 @@
+body {
+	background-color: lightblue;
+}
+
+div {
+	border-radius: 25px;
+}
+
+h2 {
+	font-style: underline;
+}
+
+#mylist {
+	background-color: 69b4ff;
+	font-weight: bold;
+	border-style: double;
+}
+
+#myform {
+	background-color: 529873;
+	text-align: center;
+	border-style: groove;
+}
