@@ -23,6 +23,24 @@
             "To declare variables, methods, and blocks as class-level",
             "To create a return value"],
           "answer": "To declare variables, methods, and blocks as class-level"
+        },
+        {
+          "questionId": 3,
+          "type": "narrative",
+          "question": "",
+          "answer": ""
+        },
+        {
+          "questionId": 4,
+          "type": "image",
+          "question": "",
+          "choices": [
+            "image.png",
+            "image.png",
+            "image.png",
+            "image.png"
+          ],
+          "answer": "image.png"
         }
       ]
     },
