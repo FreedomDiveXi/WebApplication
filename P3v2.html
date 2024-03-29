@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+		<scitpt src="transition.js"></scitpt>
+
+		<title>Quiz</title>
+	</head>
+
+	<body>
+		<div class="quiz container" id="quiz">
+			<div class="row">
+				<div class="quiz-home">
+					<h1>What is your name?</h1>
+					<input id="name" type="text"/>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<button id="mc-quiz">Multiple Choice Quiz</button>
+				</div>
+
+				<div class="col">
+					<button id="tf-quiz">True or False Quiz</button>
+				</div>
+			</div>
+		</div>
+
+		<div id="widget_view">
+			
+		</div>
+
+		<!-- Views -->
+
+		<script id="question-template" type="text/x-handlebars-template">
+			<div class="qusetion container">
+				<div class="row">
+					<div class="question-field">
+						<p>{{question}}</p>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="question-ansnwers container">
+						<ul class="answer-list" list-unstyled">
+							{{#each answers}}
+								<li class="answer">
+									<button class="btn answer-button">{{this}}</button>
+								</li>
+							{{/each}}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</script>
+	</body>
+
+</html>
