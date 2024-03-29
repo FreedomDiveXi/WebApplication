@@ -1,41 +1,86 @@
-const quizHome = document.querySelector(".quiz");
+let questionList = [];
+let correct = 0;
+let totalTime;
+let counter = 0;
 
-const remove = function (hide) {
-    hide.classList.add("hidden");
-}
-const add = function (show) {
-    show.classList.remove("hidden");
+function questionTemplate() {
+	let template = document.getElementById('questionTemplate').innerHTML;
+	return Handlebars.complile(template);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelector("#quiz").onclick = (e) => { //quiz for the div class and 
-    	//widget_view does nothing still
-        handle_app_widget_event(e);
-        remove(quizHome);
-    }
+document.addEventListener('DOMContentLoaded', () => {
+	getQuizzes();
+	document.getElementById('begin').addEventListener('click', begin);
 });
 
-function handle_app_widget_event(e) {
-    console.log("Button Pressed");
-    console.log(e);
-    const studentName = document.querySelector("#name");
+async function getQuizzes() {
+	const fetching = await fetch('https://my-json-server.typicode.com/FreedomDiveXi/WebApplication/quizzes');
+	const quizzes = await fetching.json();
+	const selectElement = document.getElementById('quiz-select');
 
-    if (e.target.id == "mc-quiz") {
-        update_view("#question-template");
-    }
-    if (e.target.id == "tf-quiz") {
-        update_view("#question-template");
-    }
+	quizzes.forEach(quiz => {
+		const option = document.createElement('option');
+		option.textContent = quiz.name;
+		option.value = quiz.id;
+		selectElement.appendChild(option);
+	});
 }
 
-function update_view(current_view) {
-    const html_element = render_widget({}, current_view)
-    document.querySelector("#widget_view").innerHTML = html_element;
+async function begin() {
+	const person = document.getElementById('person-name');
+	const quizId = document.getElementById('quiz-select').value;
+
+	await getQuestions(quizId);
+	document.getElementById('quiz-home').style.display = 'none';
+	document.getElementById('eachQuestion').style.diplay = 'block';
+	document.getElementById('questionExplaination').style.diplay = 'block';
+	document.getElementById('information').style.diplay = 'block';
 }
 
-const render_widget = (model, view) => {
-    template_source = document.querySelector(view).innerHTML
-    var template = Handlebars.compile(template_source);
-    var html_widget_element = template(model)
-    return html_widget_element
+async function getQuestions(quizId) {
+	const fetching = await fetch(`https://my-json-server.typicode.com/FreedomDiveXi/WebApplication/quizzes/${quizId}`);
+	const tempQuestions = await fetching.json();
+
+	questionList = tempQuestions.questions;
+	correct = 0;
+	counter = 0;
+	questionTime(questionList[counter]);
+}
+
+function questionTime(question) {
+	let tempQuestion = showQuestionTemplate(question);
+	let plugInDiv = document.getElementById('eachQuestion');
+	plugInDiv.innerHTML = tempQuestion;
+
+	if (question.type === "narrative") {
+		document.getElementById('user-narrative').addEventListener('click', () => {
+			const userInput = document.getElementById('user-narrative').value;
+			check(userInput);
+		});
+	}
+}
+
+function showQuestionTemplate(question) {
+	let tempQuestion = `<div><h1>${question.question}</h2>`;
+
+	switch (question.type){
+		case 'multiple-choice':
+			question.options.forEach((option, index) => {
+				tempQuestion += `<button id="answer-choices"${option}</button>`;
+			});
+			tempQuestion += `</div>`;
+		break;
+		case 'narrative':
+			tempQuestion += `<textarea id="user-narrative"></textarea><br/><button id="submit">Submit</button></div>`;
+		break;
+		case 'image':
+			tempQuestion += `<div class="image-choices">`;
+			question.options.forEach((option, index) => {
+				tempQuestion += `<img src="${option}" class="image-choice" data-answer="${index}">`;
+			});
+			tempQuestion += `</div>`;
+		break;
+	}
+
+	return tempQuestion
 }
