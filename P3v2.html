@@ -7,58 +7,55 @@
 		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-		<scitpt src="transition.js"></scitpt>
-
 		<title>Quiz</title>
 	</head>
 
 	<body>
-		<div class="quiz container" id="quiz">
-			<div class="row">
-				<div class="quiz-home">
-					<h1>What is your name?</h1>
-					<input id="name" type="text"/>
-				</div>
+		<div id="quiz-home" class="container my-4">
+			<div class="name-section">
+				<label class="name-label" for="person-name">What is your name?</label>
+				<input type="text" id="name"/>
 			</div>
 
-			<div class="row">
-				<div class="col">
-					<button id="mc-quiz">Multiple Choice Quiz</button>
-				</div>
-
-				<div class="col">
-					<button id="tf-quiz">True or False Quiz</button>
-				</div>
+			<div class="quiz-section">
+				<label class="quiz-label" for="quiz-select">What quiz do you want to take?</label>
+				<select class="dropdown" id="quiz-select">
+					<option value="">Select one</option>
+				</select>
 			</div>
+
+			<button class="btn btn-primary" id="begin">Begin</button>
 		</div>
 
-		<div id="widget_view">
-			
+		<div id="eachQuestion" style="display: none"></div>
+		<div id="questionExplaination" style="display: none"></div>
+		<div id="information" style="display: none">
+			<h1>Question you are on <span id="question-counter">0</span></h1>
+			<h1>Time <span id="time">0</span> second</h1>
+			<h1>Number of correct  <span id="correct">0</span></h1>
 		</div>
 
-		<!-- Views -->
-
-		<script id="question-template" type="text/x-handlebars-template">
-			<div class="qusetion container">
-				<div class="row">
-					<div class="question-field">
-						<p>{{question}}</p>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="question-ansnwers container">
-						<ul class="answer-list" list-unstyled">
-							{{#each answers}}
-								<li class="answer">
-									<button class="btn answer-button">{{this}}</button>
-								</li>
-							{{/each}}
-						</ul>
-					</div>
-				</div>
-			</div>
-		</script>
+		<script src="transition.js"></script>
 	</body>
 
+	<script id="questionTemplate" type="text/x-handlebars-template">
+		<div class="question">
+			<h1>{{question}}</h1>
+			{{#if options}}
+			{{#each options}}
+			<button class="answer-choices" data-answer="{{this}}">{{this}}</button>
+			{{/each}}
+			{{#if (eq type 'narrative')}}
+			<label for="user-narrative"></label><input type="text" id="user-narrative"/>
+			<button id="submit">Submit</button>
+			{{else if (eq type 'image')}}
+			<div class="image">
+				{{#each options}}
+				<img src="{{this}}" class="image-choice" data-answer="{{@index}}"/>
+				{{/each}}
+			</div>
+			{{/if}}
+			{{/if}}
+		</div>
+	</script>
 </html>
