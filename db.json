@@ -1,0 +1,42 @@
+{
+  "quizzes": [
+    {
+      "id": 1,
+      "name": "Java",
+      "questions": [
+        {
+          "questionId": 1,
+          "type": "multiple-choice",
+          "question": "Is JavaScript the same as Java?",
+          "choices": ["Yes", 
+            "No",
+            "50/50",
+            "None of the above"],
+          "answer": "No"
+        },
+        {
+          "questionId": 2,
+          "type": "multiple-choice",
+          "question": "What is the use for static in Java?",
+          "choices": ["To look pretty",
+            "To declare a new object",
+            "To declare variables, methods, and blocks as class-level",
+            "To create a return value"],
+          "answer": "To declare variables, methods, and blocks as class-level"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Python",
+      "questions": [
+        {
+          "questionId": 1,
+          "type": "narrative", 
+          "question": "What does the keyword 'import' do in python?",
+          "answer": "import modules, classes, or functions"
+        }
+      ]
+    } 
+  ]
+}
